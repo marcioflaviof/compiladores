@@ -1,9 +1,10 @@
 import re
 import string
 
-operatorslist = ["+", "-", "*", "/", "**", "=", "++", "--"] #reconhecer floats, operatorslist não funciona
-comparelist = ["and", "or", "in", ">=", "<=", "!=", "=="]
-comparelisttwo =  ["=", ">", "<"]
+operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Comparação",
+"++":"Adição", "--":"Subtração", "and":"Comparação", "or":"Comparação", "in":"Comparação", ">=":"Comparação", "<=":"Comparação",
+"!=":"Comparação", "==":"Comparação"} #reconhecer floats, operatorslist não funciona
+
 commonmistakes = ["=>", "=<", "whilee", "foor", "forr", "iff"]
 structures = ["if", "for", "while"]
 
@@ -65,14 +66,14 @@ def checkOperators(phrase):
         threestrings = twostrings + a
         twostrings = nextstring+a
 
-        if threestrings in comparelist:
-            print("{} é um operador de comparação".format(threestrings))
+        if threestrings in operatorslist:
+            print("{} é um operador de {}".format(threestrings, operatorslist[threestrings]))
 
-        elif twostrings in comparelist:
-            print("{} é um operador de comparação".format(twostrings))
+        elif twostrings in operatorslist:
+            print("{} é um operador de {}".format(twostrings, operatorslist[twostrings]))
 
         elif compareTheLast(a) == True:
-            print("{} é um operador de comparação".format(a))
+            print("{} é um operador de {}".format(a, operatorslist[a]))
 
         phrase = phrase.replace("and", "=").replace("or", "=").replace("in", "=")
         nextstring = a
@@ -81,9 +82,10 @@ def checkOperators(phrase):
     return checkVariables(splitting(phrase))
 
 
+
 def compareTheLast(character):
 
-    for a in comparelisttwo:
+    for a in operatorslist:
 
         if character == a:
             return True
@@ -121,6 +123,7 @@ def checkVariables(phrase):
         
         elif variable.isdigit():
             print("{} é um numeral".format(variable))
+
 
 
 
