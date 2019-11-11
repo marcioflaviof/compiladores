@@ -3,9 +3,10 @@ import string
 
 operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Comparação",
 "++":"Adição", "--":"Subtração", "and":"Comparação", "or":"Comparação", "in":"Comparação", ">=":"Comparação", "<=":"Comparação",
-"!=":"Comparação", "==":"Comparação"} #reconhecer floats, operatorslist não funciona
+"!=":"Comparação", "==":"Comparação"} #reconhecer floats
 
-commonmistakes = ["=>", "=<", "whilee", "foor", "forr", "iff"]
+comparelist = ["and", "or", "in", ">=", "<=", "!=", "==", "=", ">", "<"]
+commonmistakes = ["=>", "=<", "whilee", "foor", "forr", "iff", "fpr", "-+", "+-"]
 structures = ["if", "for", "while"]
 
 
@@ -56,7 +57,7 @@ def commonErrors(phrase):
 
 
 def checkOperators(phrase):
-
+    print("-" * 90)
     print("OPERADORES: ")
     nextstring = ""
     twostrings = ""
@@ -68,18 +69,21 @@ def checkOperators(phrase):
 
         if threestrings in operatorslist:
             print("{} é um operador de {}".format(threestrings, operatorslist[threestrings]))
+            phrase = phrase.replace(threestrings, "=")
 
         elif twostrings in operatorslist:
             print("{} é um operador de {}".format(twostrings, operatorslist[twostrings]))
+            phrase = phrase.replace(twostrings, "=")
 
         elif compareTheLast(a) == True:
             print("{} é um operador de {}".format(a, operatorslist[a]))
+            phrase = phrase.replace(a, "=")
 
-        phrase = phrase.replace("and", "=").replace("or", "=").replace("in", "=")
         nextstring = a
     
-    print("\n")
-    return checkVariables(splitting(phrase))
+    print("-" * 90)
+    checkFloats(phrase)
+
 
 
 
@@ -95,7 +99,7 @@ def compareTheLast(character):
 def checkOperatorstwo(phrase):
 
 
-    words_re = re.compile("|".join(operatorslist))
+    words_re = re.compile("|".join(comparelist))
     if words_re.search(phrase):
         return True
 
@@ -114,27 +118,35 @@ def splitting(phrase):
 
 def checkVariables(phrase):
 
-    print("VARIAVEIS E NUMERAIS: ")
-
     for variable in phrase:
         if variable.isalpha():
             print("{} é uma variavel".format(variable))
         
         elif variable.isdigit():
             print("{} é um numeral".format(variable))
+    
 
 
+def checkFloats(phrase):
 
+    print("VARIAVEIS E NUMERAIS: ")
+
+    matches = re.findall("[+-]?\d+\.\d+", phrase)
+    counter = 0
+
+    if matches:
+        for element in matches:
+            print("{} é um float".format(matches[counter]))
+            phrase = phrase.replace(matches[counter],"")
+            counter += 1
+
+    return checkVariables(splitting(phrase))
 
 def listToString(list):
     
     str1 = ""
-
     return str1.join(list)
 
-
-
-        
 
 
 a = input("Coloque aqui a sua frase: ")
