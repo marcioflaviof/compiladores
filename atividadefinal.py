@@ -95,9 +95,8 @@ def compareTheLast(character):
 def checkOperatorstwo(phrase):
 
 
-    words_re = re.compile("|".join(comparelist))
-    words_retwo = re.compile("|".join(comparelisttwo))
-    if words_re.search(phrase) or words_retwo.search(phrase):
+    words_re = re.compile("|".join(operatorslist))
+    if words_re.search(phrase):
         return True
 
     else:
