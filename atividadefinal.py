@@ -3,11 +3,51 @@ import string
 
 operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Comparação",
 "++":"Adição", "--":"Subtração", "and":"Comparação", "or":"Comparação", "in":"Comparação", ">=":"Comparação", "<=":"Comparação",
-"!=":"Comparação", "==":"Comparação"} #reconhecer floats
+"!=":"Comparação", "==":"Comparação"} 
 
 comparelist = ["and", "or", "in", ">=", "<=", "!=", "==", "=", ">", "<"]
 commonmistakes = ["=>", "=<", "whilee", "foor", "forr", "iff", "fpr", "-+", "+-"]
 structures = ["if", "for", "while"]
+comparer = ["/8", "?8", "?/", "/?", "8/", "*?", "8?", "* /", "/ /", "??", "\\\\", "\\\\/", "/\\", "\\/", "||"]
+
+
+
+def checkBlockComments(phrase):
+
+	if ("/*" in phrase) and ("*/" in phrase) == False:
+		return("Você digitou o comentário errado")
+
+
+	elif ("/*" in phrase) == False and ("*/" in phrase):
+		return("Você digitou o comentário errado")
+
+
+	else:
+		return checkComments(phrase)
+
+def checkComments(phrase):
+
+    a= ""
+
+    for word in comparer:
+        if word in phrase:
+            return ("Algum comentário foi digitado incorretamente")
+
+    return(removeComments(phrase))
+
+
+
+def removeComments(phrase):
+    phrase = re.sub(re.compile("/\*.*?\*/",re.DOTALL ), "", phrase)
+    a = ""
+    for i in phrase:
+        b = a + i
+        a = i
+        if b == "//":
+            phrase = phrase[:phrase.find("//")]
+    
+    print("Sua frase foi: {}".format(phrase))
+    return spaces(phrase)
 
 
 def spaces(phrase):
@@ -19,6 +59,8 @@ def spaces(phrase):
 
 def checkStructures(phrase):
     
+    print("-" * 90)
+
     a = splitting(phrase)
 
     if a[0] == "for" or a[0] == "while":
@@ -150,4 +192,4 @@ def listToString(list):
 
 
 a = input("Coloque aqui a sua frase: ")
-print(spaces(a))
+print(checkBlockComments(a))
