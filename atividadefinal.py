@@ -3,7 +3,7 @@ import string
 
 operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Comparação",
 "++":"Adição", "--":"Subtração", "and":"Comparação", "or":"Comparação", "in":"Comparação", ">=":"Comparação", "<=":"Comparação",
-"!=":"Comparação", "==":"Comparação"} 
+"!=":"Comparação", "==":"Comparação", ">":"Comparação", "<":"Comparação"} 
 
 comparelist = ["and", "or", "in", ">=", "<=", "!=", "==", "=", ">", "<"]
 commonmistakes = ["=>", "=<", "whilee", "foor", "forr", "iff", "fpr", "-+", "+-"]
@@ -12,14 +12,23 @@ comparer = ["/8", "?8", "?/", "/?", "8/", "*?", "8?", "* /", "/ /", "??", "\\\\"
 
 
 
+def checkIfExists(phrase):
+
+    if phrase != "":
+        checkBlockComments(phrase)
+
+    else:
+        return print("[ERROR] Esqueceu da frase")
+
+
 def checkBlockComments(phrase):
 
-	if ("/*" in phrase) and ("*/" in phrase) == False:
-		return("Você digitou o comentário errado")
+	if ("/*" in phrase) and "*/" not in phrase:
+		return print("[ERROR] Você digitou o comentário errado")
 
 
-	elif ("/*" in phrase) == False and ("*/" in phrase):
-		return("Você digitou o comentário errado")
+	elif "/*" not in phrase and "*/" in phrase:
+		return print("[ERROR] Você digitou o comentário errado")
 
 
 	else:
@@ -31,7 +40,7 @@ def checkComments(phrase):
 
     for word in comparer:
         if word in phrase:
-            return ("Algum comentário foi digitado incorretamente")
+            return print("[ERROR] Algum comentário foi digitado incorretamente")
 
     return(removeComments(phrase))
 
@@ -54,7 +63,16 @@ def spaces(phrase):
     
     newphrase = phrase.replace(" ", "")
 
-    return checkStructures(newphrase)
+    return checkBrackets(newphrase)
+
+
+def checkBrackets(phrase):
+
+    if  ("for" or "if" or "while") and ("(" in phrase and ")" in phrase):
+        return checkStructures(phrase)
+    
+    else:
+        return print("[ERROR] Faltam parênteses")
 
 
 def checkStructures(phrase):
@@ -72,17 +90,17 @@ def checkStructures(phrase):
         phrase = phrase.replace("if", "")
 
     
-    checkOperatorsErrors(phrase)
+        checkOperatorsErrors(phrase)
 
 
 
 def checkOperatorsErrors(phrase):
 
     if checkOperatorstwo(phrase) == False:
-        return ("[ERROR] Não há operadores válidos")
+        return print("[ERROR] Não há operadores válidos")
     
     if commonErrors(phrase) == True:
-        return ("[ERROR] Algum operador foi digitado incorretamente")
+        return print("[ERROR] Algum operador foi digitado incorretamente")
 
     else:
         return checkOperators(phrase)
@@ -160,9 +178,12 @@ def splitting(phrase):
 
 def checkVariables(phrase):
 
+    number = 1
+
     for variable in phrase:
         if variable.isalpha():
-            print("{} é uma variavel".format(variable))
+            print("{} = Identificador {}".format(variable, str(number)))
+            number += 1
         
         elif variable.isdigit():
             print("{} é um numeral".format(variable))
@@ -192,4 +213,4 @@ def listToString(list):
 
 
 a = input("Coloque aqui a sua frase: ")
-print(checkBlockComments(a))
+checkIfExists(a)
