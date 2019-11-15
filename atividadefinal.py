@@ -68,11 +68,11 @@ def spaces(phrase):
 
 def checkBrackets(phrase):
 
-    if  ("for" or "if" or "while") and ("(" in phrase and ")" in phrase):
-        return checkStructures(phrase)
+    if  ("for" or "if" or "while") == True and ("(" in phrase and ")" in phrase) == False:
+        return print("[ERROR] Faltam parênteses")
     
     else:
-        return print("[ERROR] Faltam parênteses")
+        return checkStructures(phrase)
 
 
 def checkStructures(phrase):
@@ -90,7 +90,7 @@ def checkStructures(phrase):
         phrase = phrase.replace("if", "")
 
     
-        checkOperatorsErrors(phrase)
+    checkOperatorsErrors(phrase)
 
 
 
