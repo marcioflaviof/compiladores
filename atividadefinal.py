@@ -1,7 +1,7 @@
 import re
 import string
 
-operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Comparação",
+operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Atribuição",
 "++":"Adição", "--":"Subtração", "and":"Comparação", "or":"Comparação", "in":"Comparação", ">=":"Comparação", "<=":"Comparação",
 "!=":"Comparação", "==":"Comparação", ">":"Comparação", "<":"Comparação"} 
 
@@ -10,7 +10,7 @@ commonmistakes = ["=>", "=<", "whilee", "foor", "forr", "iff", "fpr", "-+", "+-"
 structures = ["if", "for", "while"]
 comparer = ["/8", "?8", "?/", "/?", "8/", "*?", "8?", "* /", "/ /", "??", "\\\\", "\\\\/", "/\\", "\\/", "||"]
 
-
+#passar da forma infixa para pós-fixa
 
 def checkIfExists(phrase):
 
@@ -95,9 +95,6 @@ def checkStructures(phrase):
 
 
 def checkOperatorsErrors(phrase):
-
-    if checkOperatorstwo(phrase) == False:
-        return print("[ERROR] Não há operadores válidos")
     
     if commonErrors(phrase) == True:
         return print("[ERROR] Algum operador foi digitado incorretamente")
@@ -156,38 +153,11 @@ def compareTheLast(character):
 
     return False
 
-def checkOperatorstwo(phrase):
 
-
-    words_re = re.compile("|".join(comparelist))
-    if words_re.search(phrase):
-        return True
-
-    else:
-        return False
-
-
-        
 def splitting(phrase):
 
     newphrase = re.findall(r"[\w]+", phrase)
     return newphrase
-
-
-
-
-def checkVariables(phrase):
-
-    number = 1
-
-    for variable in phrase:
-        if variable.isalpha():
-            print("{} = Identificador {}".format(variable, str(number)))
-            number += 1
-        
-        elif variable.isdigit():
-            print("{} é um numeral".format(variable))
-    
 
 
 def checkFloats(phrase):
@@ -204,6 +174,21 @@ def checkFloats(phrase):
             counter += 1
 
     return checkVariables(splitting(phrase))
+
+
+def checkVariables(phrase):
+
+    number = 1
+
+    for variable in phrase:
+        if variable.isalpha():
+            print("{} = Identificador {}".format(variable, str(number)))
+            number += 1
+        
+        elif variable.isdigit():
+            print("{} é um Inteiro".format(variable))
+    
+
 
 def listToString(list):
     
