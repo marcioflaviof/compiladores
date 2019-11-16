@@ -1,5 +1,6 @@
 import re
 import string
+import infixtopostfix
 
 operatorslist = {"+":"Adição", "-":"Subtração", "*":"Multiplicação", "/":"Divisão", "**":"Exponencial", "=":"Atribuição",
 "++":"Adição", "--":"Subtração", "and":"Comparação", "or":"Comparação", "in":"Comparação", ">=":"Comparação", "<=":"Comparação",
@@ -197,5 +198,9 @@ def listToString(list):
 
 
 
+
+
 a = input("Coloque aqui a sua frase: ")
+infixtopostfix = infixtopostfix.Conversion(len(a))
+infixtopostfix.infixToPostfix(a)
 checkIfExists(a)
