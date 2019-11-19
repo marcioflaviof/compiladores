@@ -81,7 +81,11 @@ class Conversion:
         # pop all the operator from the stack 
         while not self.isEmpty(): 
             self.output.append(self.pop()) 
-  
+
+        print("-" * 90)
+        print("Infix to postfix: ")
         print("".join(self.output))
+        print("-" * 90)
+
   
 # Driver program to test above function 
